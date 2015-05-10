@@ -35,17 +35,18 @@ var ymoving = false;
 var zmoving = false;
 var moving  = false;
 
+var gpsActive = false;
+var currentLatitude = '';
+var currentLongitude = '';
+var currentTimeStamp = '';
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
+// Acceleromter processing to determine if moving or stopped
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 accel.on('ready', function () {
   accel.setOutputRate(1.56, function rateSet() {
   accel.on('data', function (xyz) {
-
-//	console.log('x:', xyz[0].toFixed(4),
-//				'y:', xyz[1].toFixed(4),
-//				'z:', xyz[2].toFixed(4));
 
 	xtemp = ((Math.round(xyz[0] * 1000)) / 1000);
 	xdata.push(xtemp);
@@ -95,12 +96,12 @@ accel.on('ready', function () {
  	  zmoving = true;
  	}
 
-// 	if (xmoving || ymoving || zmoving) {
-// 	  console.log("Moving")
-// 	}
-// 	else {
-// 	  console.log("Stopped")
-// 	}
+ 	if (xmoving || ymoving || zmoving) {
+ 	  moving = true;
+  	}
+ 	else {
+ 	  moving = false;
+ 	}
 
    	});
   });
@@ -121,15 +122,19 @@ gps.on('ready', function () {
   }
   
   gps.on('coordinates', function (coords) {
+  	gpsActive        = true;
+  	currentLatitude  = coords.lat;
+  	currentLongitude = coords.lon;
+  	currentTimeStamp = coords.timestamp;
     console.log('Lat:', coords.lat, '\tLon:', coords.lon, '\tTimestamp:', coords.timestamp);
   });
 
-  // Emitted when we have information about a fix on satellites
   gps.on('fix', function (data) {
     console.log(data.numSat, 'fixed.');
   });
 
   gps.on('dropped', function(){
+  	gpsActive = false;
     console.log("gps signal dropped");
   });
 });
@@ -150,7 +155,7 @@ gps.on('error', function(err){
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-var shareInterval      = 2000;
+var shareInterval      = 15000;
 var shareLocationCount = 0;
 
 var shareLocationInterval = setInterval(shareLocation, shareInterval);

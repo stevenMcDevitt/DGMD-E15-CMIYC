@@ -1,4 +1,5 @@
 
+var tessel = require('tessel');
 var Twit = require('twitter');
  
 var client = new Twit({
@@ -8,7 +9,7 @@ var client = new Twit({
   access_token_secret: 'mPRPuKhIQC0KptriK70uMRvvY1uwjyXjgKaEsZFWH322a'
 });
 
-client.post('statuses/update',{status: 'This is a test message 40 - From Tessel'}, function(error, tweet, response) {
+client.post('statuses/update',{status: 'This is a test message 34 - From Tessel'}, function(error, tweet, response) {
   console.log(error);
   console.log(tweet);
   console.log(response); 
