@@ -1,11 +1,14 @@
-//
-// accel.js - Example for Accelerometer
-//
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Tesstel - Accelerometer Module Test
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 var tessel = require('tessel');
 var accel  = require('accel-mma84').use(tessel.port['A']);
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
-// Initialize the accelerometer modeule.
-//
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 accel.on('ready', function () {
 	accel.setOutputRate(1.56, function rateSet() {
 		accel.on('data', function (xyz) {
