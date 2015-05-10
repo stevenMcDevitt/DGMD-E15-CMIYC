@@ -1,5 +1,5 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Catch Me If You Can v0.01 (CMIYC)
+// Catch Me If You Can v02 (CMIYC)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 var tessel = require('tessel');
 var accel  = require('accel-mma84').use(tessel.port['D']);
