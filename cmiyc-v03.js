@@ -35,6 +35,8 @@ var ymoving = false;
 var zmoving = false;
 var moving  = false;
 
+var shareEntropy = true;
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
