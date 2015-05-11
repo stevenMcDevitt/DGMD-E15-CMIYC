@@ -35,6 +35,7 @@ var ymoving = false;
 var zmoving = false;
 var moving  = false;
 
+var shareLocationEntropy = false;
 var gpsActive = false;
 var currentLatitude = '';
 var currentLongitude = '';
@@ -46,64 +47,66 @@ var currentTimeStamp = '';
 
 accel.on('ready', function () {
   accel.setOutputRate(1.56, function rateSet() {
-  accel.on('data', function (xyz) {
+    accel.on('data', function (xyz) {
 
-	xtemp = ((Math.round(xyz[0] * 1000)) / 1000);
-	xdata.push(xtemp);
-	xdata.shift();
-	xsum = 0.0;
-	for (x = 0 ; x < xdata.length ; x++) {
-	  xsum += xdata[x];
-	}
-	xavg = xsum / x;
+    xtemp = ((Math.round(xyz[0] * 1000)) / 1000);
+    xdata.push(xtemp);
+    xdata.shift();
+    xsum = 0.0;
+
+    for (x = 0 ; x < xdata.length ; x++) {
+      xsum += xdata[x];
+    }
+    xavg = xsum / x;
  
- 	if (Math.abs((xtemp / xavg)) > 0.90 && Math.abs((xtemp / xavg)) < 1.10) {
- 	  xmoving = false;
- 	}
- 	else {
- 	  xmoving = true;
- 	}
+    if (Math.abs((xtemp / xavg)) > 0.90 && Math.abs((xtemp / xavg)) < 1.10) {
+      xmoving = false;
+    }
+    else {
+      xmoving = true;
+    }
 
-	ytemp = ((Math.round(xyz[1] * 1000)) / 1000);
-	ydata.push(ytemp);
-	ydata.shift();
-	ysum = 0.0;
-	for (x = 0 ; x < ydata.length ; x++) {
-	  ysum += ydata[x];
-	}
-	yavg = ysum / x;
+    ytemp = ((Math.round(xyz[1] * 1000)) / 1000);
+    ydata.push(ytemp);
+    ydata.shift();
+    ysum = 0.0;
+
+    for (x = 0 ; x < ydata.length ; x++) {
+      ysum += ydata[x];
+    }
+    yavg = ysum / x;
  
- 	if (Math.abs((ytemp / yavg)) > 0.90 && Math.abs((ytemp / yavg)) < 1.10) {
- 	  ymoving = false;
- 	}
- 	else {
- 	  ymoving = true;
- 	}
+    if (Math.abs((ytemp / yavg)) > 0.90 && Math.abs((ytemp / yavg)) < 1.10) {
+      ymoving = false;
+    }
+    else {
+      ymoving = true;
+    }
 
-	ztemp = ((Math.round(xyz[2] * 1000)) / 1000);
-	zdata.push(ztemp);
-	zdata.shift();
-	zsum = 0.0;
-	for (x = 0 ; x < zdata.length ; x++) {
-	  zsum += zdata[x];
-	}
-	zavg = zsum / x;
+    ztemp = ((Math.round(xyz[2] * 1000)) / 1000);
+    zdata.push(ztemp);
+    zdata.shift();
+    zsum = 0.0;
+
+    for (x = 0 ; x < zdata.length ; x++) {
+      zsum += zdata[x];
+    }
+    zavg = zsum / x;
  
- 	if (Math.abs((ztemp / zavg)) > 0.90 && Math.abs((ztemp / zavg)) < 1.10) {
- 	  zmoving = false;
- 	}
- 	else {
- 	  zmoving = true;
- 	}
+    if (Math.abs((ztemp / zavg)) > 0.90 && Math.abs((ztemp / zavg)) < 1.10) {
+      zmoving = false;
+    }
+    else {
+      zmoving = true;
+    }
 
- 	if (xmoving || ymoving || zmoving) {
- 	  moving = true;
+    if (xmoving || ymoving || zmoving) {
+      moving = true;
   	}
- 	else {
- 	  moving = false;
- 	}
-
-   	});
+ 	  else {
+      moving = false;
+    }
+    });
   });
 });
 
