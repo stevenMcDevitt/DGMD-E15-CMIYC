@@ -35,6 +35,8 @@ var ymoving = false;
 var zmoving = false;
 var moving  = false;
 
+var latData = [];
+var lonData = [];
 var shareLocationEntropy = false;
 var gpsActive = false;
 var currentLatitude = '';
@@ -123,11 +125,15 @@ gps.on('ready', function () {
   } else {
   	console.log('Default: 2000');
   }
+
+  gps.setPollTime(15000);
   
   gps.on('coordinates', function (coords) {
   	gpsActive        = true;
   	currentLatitude  = coords.lat;
+    latData.push(coords.lat);
   	currentLongitude = coords.lon;
+    lonData.push(coords.lon);
   	currentTimeStamp = coords.timestamp;
     console.log('Lat:', coords.lat, '\tLon:', coords.lon, '\tTimestamp:', coords.timestamp);
   });
@@ -158,15 +164,20 @@ gps.on('error', function(err){
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-var shareInterval      = 15000;
+var shareInterval      = 30000;
 var shareLocationCount = 0;
 
 var shareLocationInterval = setInterval(shareLocation, shareInterval);
 
 function shareLocation()
 {
+
+  if (shareLocationCount == 0) {
+    console.log("Catch me if you can");
+  }
+
   shareLocationCount += 1;
-  shareInterval = Math.floor(((Math.random() * 150) * 1000));
+  shareInterval = Math.floor(((Math.random() * 150) * 1000)) + 30000;
 
   clearInterval(shareLocationInterval);
 
